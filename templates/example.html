@@ -1,0 +1,14 @@
+{% from "macros/example-navbar.html" import example_navbar %}
+{% extends "base.html" %}
+{% block header %}{{ example_navbar() }}{% endblock %}
+{% block body %}
+<main class="dbcd-main mb-5 mx-2 mx-md-4 my-4">
+  {% block size_warning %}{% endblock %}
+  <div
+    style="transform:translateZ(0);box-shadow:0 0 10px 5px #9c9c9c;min-height:calc(700px);"
+  >
+    {% block content %}{% endblock %}
+  </div>
+
+</main>
+{% endblock %}

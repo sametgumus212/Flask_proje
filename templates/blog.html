@@ -1,0 +1,9 @@
+{% from "macros/navbar.html" import navbar %}
+{% from "macros/theme-demo.html" import theme_demo %}
+{% extends "base.html" %}
+{% block title %}<title>Dash Bootstrap Components</title>{% endblock %}
+{% block header %}{{ navbar("home") }}{% endblock %}
+{% block body %}
+<br>
+<h2> blog site</h2>
+{% endblock %}

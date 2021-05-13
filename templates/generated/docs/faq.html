@@ -1,0 +1,75 @@
+{% extends "docs.html" %}
+{% block title %}<title>FAQ - dbc docs</title>{% endblock %}
+{% block content %}<h1>Frequently Asked Questions</h1>
+<p>This page contains various tips and tricks and answers to frequently asked questions about <em>dash-bootstrap-components</em>. If you think something is missing, please submit an <a href="https://github.com/facultyai/dash-bootstrap-components/issues/new?template=feature.md">issue</a> on the GitHub issue tracker.</p>
+<h3>How do I use <code>Tooltip</code> or <code>Popover</code> with pattern-matching callbacks?</h3>
+<p>Dash 1.11.0 added support for <a href="https://dash.plotly.com/pattern-matching-callbacks">pattern matching callbacks</a> which allows you to write callbacks that can update an arbitrary or dynamic number of Dash components. To enable this, the <code>id</code> of a Dash component can now be a Python dictionary, and the callback is triggered based on a matching rule with one or more of the keys in this dictionary.</p>
+<p>However, it is not possible to use a dictionary as the <code>target</code> of the <code>Popover</code> or <code>Tooltip</code> components. The reason for this is explained below. To get around the problem, the best thing to do is to wrap your dynamically created components with a <code>html.Div</code> element or similar, and use a string <code>id</code> for the wrapper which you then use as the target for the <code>Tooltip</code> or <code>Popover</code>. For example this example from the Dash documentation</p>
+<pre class="highlight"><code class="language-python">@app.callback(
+    Output('dropdown-container', 'children'),
+    Input('add-filter', 'n_clicks'),
+    State('dropdown-container', 'children'))
+def display_dropdowns(n_clicks, children):
+    new_dropdown = dcc.Dropdown(
+        id={
+            'type': 'filter-dropdown',
+            'index': n_clicks
+        },
+        options=[{'label': i, 'value': i} for i in ['NYC', 'MTL', 'LA', 'TOKYO']]
+    )
+    children.append(new_dropdown)
+    return children</code></pre>
+<p>might become the following</p>
+<pre class="highlight"><code class="language-python">@app.callback(
+    Output('dropdown-container', 'children'),
+    Input('add-filter', 'n_clicks'),
+    State('dropdown-container', 'children'))
+def display_dropdowns(n_clicks, children):
+    new_dropdown = html.Div(
+        dcc.Dropdown(
+            id={
+                'type': 'filter-dropdown',
+                'index': n_clicks
+            },
+            options=[{'label': i, 'value': i} for i in ['NYC', 'MTL', 'LA', 'TOKYO']]
+        ),
+        id=f"dropdown-wrapper-{n_clicks}"
+    )
+    new_tooltip = dbc.Tooltip(
+        f"This is dropdown number {n_clicks}",
+        target=f"dropdown-wrapper-{n_clicks}",
+    )
+    children.append(new_dropdown)
+    children.append(new_tooltip)
+    return children</code></pre>
+<p>The reason <code>Popover</code> and <code>Tooltip</code> can't support the dictionary-based <code>id</code> is that under the hood these components are searching for the <code>id</code> using a function called <code>querySelectorAll</code> implemented as part of the standard Web APIs. This function can only search for a valid CSS selector string, which is restricted more or less to alphanumeric characters plus hyphens and underscores. Dash serialises dictionary ids as JSON, which contains characters like <code>{</code> and <code>}</code> that are invalid in CSS selectors. The above workaround avoids this issue.</p>
+<h3>How do I scale the viewport on mobile devices?</h3>
+<p>When building responsive layouts it is typical to have something like the following in your HTML template</p>
+<pre class="highlight"><code class="language-html">&lt;meta name="viewport" content="width=device-width, initial-scale=1" /&gt;</code></pre>
+<p>this ensures that mobile devices don't rescale your content on small screens and lets you build mobile optimised layouts. See <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Mobile/Viewport_meta_tag">here</a> for a great explanation.</p>
+<p>To achieve the same thing in Dash, use the <code>metas</code> keyword argument in the <code>Dash</code> constructor.</p>
+<pre class="highlight"><code class="language-python">app = dash.Dash(
+    external_stylesheets=[dbc.themes.BOOTSTRAP],
+    meta_tags=[
+        {"name": "viewport", "content": "width=device-width, initial-scale=1"},
+    ],
+)</code></pre>
+<h3>How do I make the <code>Popover</code> wider?</h3>
+<p>Bootstrap sets the <code>max-width</code> of the popover in the <code>.popover</code> CSS class. You can overwrite this, either by using a local copy of Bootstrap CSS and editing the file, or by adding a snippet like the following to your <code>assets/</code> folder.</p>
+<pre class="highlight"><code class="language-css">.popover {
+  max-width: 400px;
+}</code></pre>
+<p>See the <a href="https://dash.plotly.com/external-resources">Dash docs</a> for details on linking custom stylesheets.</p>
+<h3>Using Bootstrap and <code>dash_table.DataTable</code> together</h3>
+<p>This is a historical problem that was fixed in Dash 1.18.1. If you are able to, the easiest fix to compatibility issues with <code>dash_table.DataTable</code> and <em>dash-bootstrap-components</em> is to simply update Dash</p>
+<pre class="highlight"><code>pip install -U dash</code></pre>
+<p>If you have an older version of Dash and are unable to update, then read on for a workaround.</p>
+<p>Bootstrap CSS defines a CSS class called <code>row</code>, which is a key part of the Bootstrap grid system. The <code>DataTable</code> component applies the <code>row</code> class to rows in the table, which causes a clash and breaks some of the formatting of the table. In particular the table can overflow its container, and dropdowns aren't rendered correctly.</p>
+<p>The solution is to prevent the Bootstrap row styles from being applied to rows in the table. There are two ways to do this. The first way, which is maybe more convenient if you just have a single table, is to pass additional arguments to the <code>css</code> prop of <code>DataTable</code> like this</p>
+<pre class="highlight"><code class="language-python">DataTable(..., css=[{"selector": ".row", "rule": "margin: 0; display: block"}])</code></pre>
+<p>Alternatively, you can write the following custom CSS to apply the styles to all tables in your app.</p>
+<pre class="highlight"><code class="language-css">.dash-table-container .row {
+  display: block;
+  margin: 0;
+}</code></pre>
+<p>See the <a href="https://dash.plotly.com/external-resources">Dash docs</a> for details on linking custom stylesheets.</p>{% endblock %}
