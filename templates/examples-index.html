@@ -1,0 +1,77 @@
+{% from "macros/sidenav.html" import sidenav %}
+{% from "macros/navbar.html" import navbar %}
+{% extends "base.html" %}
+{% block title %}<title>Examples - dbc docs</title>{% endblock %}
+{% block header %}{{ navbar("examples") }}{% endblock %}
+{% block body %}
+<div class="container">
+  <main class="dbcd-main mb-5">
+    <h1>Dashboards</h1>
+    <p class="lead">
+Dashboards Apps
+    </p>
+    <div class="row">
+      <div class="col-12 col-md-4">
+        <h2>PREK EU Regions</h2>
+        <div class="card">
+          <a href="/examples/app-1">
+            <img
+              src="/static/images/examples/app-1-logo.jpg"
+              alt="Iris example screenshot"
+              class="card-img-top card-img-bottom"
+          /></a>
+        </div>
+        <p>
+         Analyze different components of public understanding of science: Progress, Reserve, Interest and Knowledge in different EU regions in 2005
+        </p>
+      </div>
+      <div class="col-12 col-md-4">
+        <h2>APP-2</h2>
+        <div class="card">
+          <a href="/examples/app-2"
+            ><img
+              src="/static/images/examples/app-2-logo.jpg"
+              alt="Graphs in tabs example screehshot"
+              class="card-img-top card-img-bottom"
+          /></a>
+        </div>
+        <p>
+
+        </p>
+      </div>
+      <div class="col-12 col-md-4">
+        <h2>APP-3</h2>
+        <div class="card">
+          <a href="/examples/app-3"
+            ><img
+              src="/static/images/examples/app-3-logo.jpg"
+              alt="Simple sidebar example screenshot"
+              class="card-img-top card-img-bottom"
+          /></a>
+        </div>
+        <p>
+        </p>
+      </div>
+    </div>
+    <br>
+    <hr>
+     <div class="row">
+       <div class="col-12 col-md-4">
+        <h2>örnek uygulama</h2>
+        <div class="card">
+          <a href="/examples/app-4">
+            <img
+              src="/static/images/examples/app-4.jpg"
+              alt="Iris example screenshot"
+              class="card-img-top card-img-bottom"
+          /></a>
+        </div>
+        <p>
+       örnek uygulama 42
+        </p>
+
+
+    </div>
+  </main>
+</div>
+{% endblock %}

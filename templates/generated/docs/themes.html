@@ -1,0 +1,89 @@
+{% extends "docs.html" %}
+{% block title %}<title>Themes - dbc docs</title>{% endblock %}
+{% block content %}<h1>Themes</h1>
+<p class="lead">Customise your app by choosing from different Bootstrap and Bootswatch themes.</p>
+
+<p><em>dash-bootstrap-components</em> doesn't come with CSS included. This is to give you the freedom to use any Bootstrap v4 stylesheet of your choice, so you can achieve the look you want in your app.</p>
+<p>You can link to a stylesheet served over a CDN, or serve CSS locally depending on your needs.</p>
+<h2>Packaged CDN links</h2>
+<p><em>dash-bootstrap-components</em> contains links to Bootstrap and Bootswatch stylesheets hosted on <a href="https://www.bootstrapcdn.com/">BootstrapCDN</a> so you can conveniently link to one of them in your app. The easiest way to do so is to use the <code>external_stylesheets</code> argument when instantiating your app.</p>
+<div class="card mb-3">
+  <div class="card-header">
+    <ul class="nav nav-tabs card-header-tabs bootstrap-tabs" role="tablist"><li class="nav-item" role="presentation">
+  <a class="nav-link active" id="python4-tab" data-toggle="tab" href="#python4" role="tab" aria-controls="python4" aria-selected="true">Python</a>
+</li>
+<li class="nav-item" role="presentation">
+  <a class="nav-link" id="r4-tab" data-toggle="tab" href="#r4" role="tab" aria-controls="r4" aria-selected="false">R</a>
+</li>
+<li class="nav-item" role="presentation">
+  <a class="nav-link" id="julia4-tab" data-toggle="tab" href="#julia4" role="tab" aria-controls="julia4" aria-selected="false">Julia</a>
+</li>
+</ul>
+  </div>
+  <div class="card-body tab-content"><div class="tab-pane fade show active" id="python4" role="tabpanel" aria-labelledby="python4-tab"><p>Links are available in the <code>dash_bootstrap_components.themes</code> submodule.</p>
+<pre><code class="language-python">import dash
+import dash_bootstrap_components as dbc
+
+app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
+</code></pre>
+<p>This will link the standard Bootstrap stylesheet. To link one of the Bootswatch styles, such as <a href="https://bootswatch.com/cyborg/">Cyborg</a> you would just change this to</p>
+<pre><code class="language-python">import dash
+import dash_bootstrap_components as dbc
+
+app = dash.Dash(external_stylesheets=[dbc.themes.CYBORG])
+</code></pre></div><div class="tab-pane fade show" id="r4" role="tabpanel" aria-labelledby="r4-tab"><p>Links are available in the <code>dbcThemes</code> list which is added to your namespace when you import <code>dashBootstrapComponents</code>.</p>
+<pre><code class="language-r">library(dash)
+library(dashBootstrapComponents)
+
+app &lt;- Dash$new(external_stylesheets = dbcThemes$BOOTSTRAP)
+</code></pre>
+<p>This will link the standard Bootstrap stylesheet. To link one of the Bootswatch styles, such as <a href="https://bootswatch.com/cyborg/">Cyborg</a> you would just change this to</p>
+<pre><code class="language-r">library(dash)
+library(dashBootstrapComponents)
+
+app &lt;- Dash$new(external_stylesheets = dbcThemes$CYBORG)
+</code></pre></div><div class="tab-pane fade show" id="julia4" role="tabpanel" aria-labelledby="julia4-tab"><p>Links are available as part of the <code>dbc_themes</code> named tuple available in <code>DashBootstrapComponents</code>.</p>
+<pre><code class="language-julia">using Dash, DashBootstrapComponents
+
+app = dash(external_stylesheets=[dbc_themes.BOOTSTRAP])
+</code></pre>
+<p>This will link the standard Bootstrap stylesheet. To link one of the Bootswatch styles, such as <a href="https://bootswatch.com/cyborg/">Cyborg</a> you would just change this to</p>
+<pre><code class="language-julia">using Dash, DashBootstrapComponents
+
+app = dash(external_stylesheets=[dbc_themes.CYBORG])
+</code></pre></div></div>
+</div>
+
+<p>See the <a href="#available-themes">available themes</a> for more.</p>
+<h2>Manually linking to a CDN</h2>
+<p>Each theme such as is simply a BootstrapCDN URL stored as a string, so using the themes module is really equivalent to doing something like the following.</p>
+<div class="card mb-3">
+  <div class="card-header">
+    <ul class="nav nav-tabs card-header-tabs bootstrap-tabs" role="tablist"><li class="nav-item" role="presentation">
+  <a class="nav-link active" id="python5-tab" data-toggle="tab" href="#python5" role="tab" aria-controls="python5" aria-selected="true">Python</a>
+</li>
+<li class="nav-item" role="presentation">
+  <a class="nav-link" id="r5-tab" data-toggle="tab" href="#r5" role="tab" aria-controls="r5" aria-selected="false">R</a>
+</li>
+<li class="nav-item" role="presentation">
+  <a class="nav-link" id="julia5-tab" data-toggle="tab" href="#julia5" role="tab" aria-controls="julia5" aria-selected="false">Julia</a>
+</li>
+</ul>
+  </div>
+  <div class="card-body tab-content"><div class="tab-pane fade show active" id="python5" role="tabpanel" aria-labelledby="python5-tab"><pre><code class="language-python">BS = &quot;https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css&quot;
+app = dash.Dash(external_stylesheets=[BS])
+</code></pre></div><div class="tab-pane fade show" id="r5" role="tabpanel" aria-labelledby="r5-tab"><pre><code class="language-r">BS &lt;- &quot;https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css&quot;
+app &lt;- Dash$new(external_stylesheets = BS)
+</code></pre></div><div class="tab-pane fade show" id="julia5" role="tabpanel" aria-labelledby="julia5-tab"><pre><code class="language-julia">BS = &quot;https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css&quot;
+app = dash(external_stylesheets=[BS])
+</code></pre></div></div>
+</div>
+
+<p>You can change this URL to anything you like, for example if you prefer to use a mirror or a different CDN to supply the stylesheet.</p>
+<h2>Linking local CSS</h2>
+<p>You can <a href="https://getbootstrap.com/docs/4.6/getting-started/download/">download</a> a stylesheet and serve it locally if you prefer. This might be desirable if you are restricted by a firewall or if you want to modify the stylesheet or even <a href="https://getbootstrap.com/docs/4.6/getting-started/theming/">compile your own</a>. There are tools online to help with this, we recommend <a href="https://bootstrap.build/app">Bootstrap Build</a>.</p>
+<p>The easiest way to link a local stylesheet is to place it in a folder named <code>assets/</code> in the root of the app directory. See the <a href="https://dash.plotly.com/external-resources/">Dash documentation</a> for more details on this.</p>
+<h2 id="available-themes">Available themes</h2>
+
+<p>There are numerous free to use Bootstrap stylesheets available on the web. The <code>dash_bootstrap_components.themes</code> module contains CDN links for Bootstrap and all of the <a href="https://www.bootstrapcdn.com/bootswatch/">Bootswatch themes</a>. Bootstrap also maintains its own <a href="https://themes.getbootstrap.com/">themes website</a> which lists a number of free and premium themes that you could incorporate into your apps.</p>
+<p>To start with, we recommend experimenting with some of the Bootswatch themes available in the <code>dash_bootstrap_components.themes</code> module. The full list of available themes is <a href="https://bootswatch.com/cerulean/"><code>CERULEAN</code></a>, <a href="https://bootswatch.com/cosmo/"><code>COSMO</code></a>, <a href="https://bootswatch.com/cyborg/"><code>CYBORG</code></a>, <a href="https://bootswatch.com/darkly/"><code>DARKLY</code></a>, <a href="https://bootswatch.com/flatly/"><code>FLATLY</code></a>, <a href="https://bootswatch.com/journal/"><code>JOURNAL</code></a>, <a href="https://bootswatch.com/litera/"><code>LITERA</code></a>, <a href="https://bootswatch.com/lumen/"><code>LUMEN</code></a>, <a href="https://bootswatch.com/lux/"><code>LUX</code></a>, <a href="https://bootswatch.com/materia/"><code>MATERIA</code></a>, <a href="https://bootswatch.com/minty/"><code>MINTY</code></a>, <a href="https://bootswatch.com/pulse/"><code>PULSE</code></a>, <a href="https://bootswatch.com/sandstone/"><code>SANDSTONE</code></a>, <a href="https://bootswatch.com/simplex/"><code>SIMPLEX</code></a>, <a href="https://bootswatch.com/sketchy/"><code>SKETCHY</code></a>, <a href="https://bootswatch.com/slate/"><code>SLATE</code></a>, <a href="https://bootswatch.com/solar/"><code>SOLAR</code></a>, <a href="https://bootswatch.com/spacelab/"><code>SPACELAB</code></a>, <a href="https://bootswatch.com/superhero/"><code>SUPERHERO</code></a>, <a href="https://bootswatch.com/united/"><code>UNITED</code></a>, <a href="https://bootswatch.com/yeti/"><code>YETI</code></a></p>{% endblock %}

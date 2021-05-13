@@ -1,0 +1,146 @@
+{% extends "docs.html" %}
+{% block title %}<title>Quickstart - dbc docs</title>{% endblock %}
+{% block content %}<h1>Quickstart</h1>
+<p class="lead">Installation instructions and basic usage.</p>
+
+<h2>Installation</h2>
+<p><em>dash-bootstrap-components</em> can be used with Dash in Python, R or Julia.</p>
+<div class="card mb-3">
+  <div class="card-header">
+    <ul class="nav nav-tabs card-header-tabs bootstrap-tabs" role="tablist"><li class="nav-item" role="presentation">
+  <a class="nav-link active" id="python1-tab" data-toggle="tab" href="#python1" role="tab" aria-controls="python1" aria-selected="true">Python</a>
+</li>
+<li class="nav-item" role="presentation">
+  <a class="nav-link" id="r1-tab" data-toggle="tab" href="#r1" role="tab" aria-controls="r1" aria-selected="false">R</a>
+</li>
+<li class="nav-item" role="presentation">
+  <a class="nav-link" id="julia1-tab" data-toggle="tab" href="#julia1" role="tab" aria-controls="julia1" aria-selected="false">Julia</a>
+</li>
+</ul>
+  </div>
+  <div class="card-body tab-content"><div class="tab-pane fade show active" id="python1" role="tabpanel" aria-labelledby="python1-tab"><h3>PyPI</h3>
+<p>You can install <em>dash-bootstrap-components</em> with <code>pip</code>:</p>
+<pre><code class="language-sh">pip install dash-bootstrap-components
+</code></pre>
+<h3>Anaconda</h3>
+<p>You can also install <em>dash-bootstrap-components</em> with <code>conda</code> through the
+conda-forge channel:</p>
+<pre><code class="language-sh">conda install -c conda-forge dash-bootstrap-components
+</code></pre></div><div class="tab-pane fade show" id="r1" role="tabpanel" aria-labelledby="r1-tab"><p>To get started make sure you have <a href="https://dashr.plotly.com/installation">installed Dash for R</a>. If you didn't already install it in order to install Dash for R, we also need to make sure that the <em>devtools</em> library is installed.</p>
+<pre><code class="language-r">install.packages(&quot;devtools&quot;)
+</code></pre>
+<p>You can then install <em>dash-bootstrap-components</em> from the <code>r-release</code> branch of our GitHub repository.</p>
+<pre><code class="language-r">library(devtools)
+install_github('facultyai/dash-bootstrap-components@r-release')
+</code></pre>
+<p>The <code>r-release</code> branch will always point to the latest R release. If you want a specific version you can install it by referencing with a tag of the form <code>rX.X.X</code> where <code>X.X.X</code> is the desired version number. For example to install version <code>0.10.0</code> you could do</p>
+<pre><code class="language-r">library(devtools)
+install_github('facultyai/dash-bootstrap-components@r0.10.0')
+</code></pre></div><div class="tab-pane fade show" id="julia1" role="tabpanel" aria-labelledby="julia1-tab"><p>To get started make sure you have <a href="https://dash-julia.plotly.com/installation">installed Dash.jl</a>. You can then install <code>DashBootstrapComponents</code> as follows</p>
+<pre><code class="language-julia-repl">pkg&gt; add DashBootstrapComponents
+</code></pre>
+<p>Or alternatively you can install from source as follows</p>
+<pre><code class="language-julia-repl">julia&gt; using Pkg;
+julia&gt; Pkg.add(PackageSpec(
+           url=&quot;https://github.com/facultyai/dash-bootstrap-components&quot;, rev=&quot;julia-release&quot;,
+       ))
+</code></pre></div></div>
+</div>
+
+<h2>Basic usage</h2>
+<p><em>dash-bootstrap-components</em> is a component library for use with Plotly Dash. If you have not used Dash before, it's strongly recommended you check out <a href="https://dash.plotly.com">the Dash documentation</a> and try building a basic app first.</p>
+<p>To use <em>dash-bootstrap-components</em> you must do two things:</p>
+<ul>
+<li>Link a Bootstrap v4 compatible stylesheet</li>
+<li>Incorporate <em>dash-bootstrap-components</em> into the layout of your app.</li>
+</ul>
+<h3>Linking a stylesheet</h3>
+<p><em>dash-bootstrap-components</em> doesn't come with CSS included. This is to give you the freedom to use any Bootstrap v4 stylesheet of your choice. This means however that in order for the components to be styled properly, you must link to a stylesheet yourself.</p>
+<p>For convenience, links to <a href="https://www.bootstrapcdn.com/">BootstrapCDN</a> for standard Bootstrap and each Bootswatch theme are available as part of <em>dash-bootstrap-components</em> and can be used as follows</p>
+<div class="card mb-3">
+  <div class="card-header">
+    <ul class="nav nav-tabs card-header-tabs bootstrap-tabs" role="tablist"><li class="nav-item" role="presentation">
+  <a class="nav-link active" id="python2-tab" data-toggle="tab" href="#python2" role="tab" aria-controls="python2" aria-selected="true">Python</a>
+</li>
+<li class="nav-item" role="presentation">
+  <a class="nav-link" id="r2-tab" data-toggle="tab" href="#r2" role="tab" aria-controls="r2" aria-selected="false">R</a>
+</li>
+<li class="nav-item" role="presentation">
+  <a class="nav-link" id="julia2-tab" data-toggle="tab" href="#julia2" role="tab" aria-controls="julia2" aria-selected="false">Julia</a>
+</li>
+</ul>
+  </div>
+  <div class="card-body tab-content"><div class="tab-pane fade show active" id="python2" role="tabpanel" aria-labelledby="python2-tab"><p>In Python, each CDN link is available within the <code>dbc.themes</code> submodule and can
+be used when instantiating the <code>app</code> object.</p>
+<pre><code class="language-python">import dash
+import dash_bootstrap_components as dbc
+
+app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
+</code></pre></div><div class="tab-pane fade show" id="r2" role="tabpanel" aria-labelledby="r2-tab"><p>Once you have imported <em>dash-bootstrap-components</em> with
+<code>library(dashBootstrapComponents)</code>, the <code>dbcThemes</code> list will be loaded into
+your global namespace and can be used when instantiating the <code>app</code> object.</p>
+<pre><code class="language-r">library(dash)
+library(dashBootstrapComponents)
+
+app &lt;- Dash$new(external_stylesheets = dbcThemes$BOOTSTRAP)
+</code></pre></div><div class="tab-pane fade show" id="julia2" role="tabpanel" aria-labelledby="julia2-tab"><pre><code class="language-julia">using Dash, DashBootstrapComponents
+
+app = dash(external_stylesheets=[dbc_themes.BOOTSTRAP])
+</code></pre></div></div>
+</div>
+
+<p>For more information on available themes see the <a href="/docs/themes">themes documentation</a></p>
+<h3>Build the layout</h3>
+<p>With CSS linked, you can start building your app's layout with our Bootstrap components. See the <a href="/docs/components">component documentation</a> for a full list of available components, or try running this minimal example to get started.</p>
+<div class="card mb-3">
+  <div class="card-header">
+    <ul class="nav nav-tabs card-header-tabs bootstrap-tabs" role="tablist"><li class="nav-item" role="presentation">
+  <a class="nav-link active" id="python3-tab" data-toggle="tab" href="#python3" role="tab" aria-controls="python3" aria-selected="true">Python</a>
+</li>
+<li class="nav-item" role="presentation">
+  <a class="nav-link" id="r3-tab" data-toggle="tab" href="#r3" role="tab" aria-controls="r3" aria-selected="false">R</a>
+</li>
+<li class="nav-item" role="presentation">
+  <a class="nav-link" id="julia3-tab" data-toggle="tab" href="#julia3" role="tab" aria-controls="julia3" aria-selected="false">Julia</a>
+</li>
+</ul>
+  </div>
+  <div class="card-body tab-content"><div class="tab-pane fade show active" id="python3" role="tabpanel" aria-labelledby="python3-tab"><p>This is a minimal Dash app written in Python.</p>
+<pre><code class="language-python">import dash
+import dash_bootstrap_components as dbc
+
+app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
+
+app.layout = dbc.Container(
+    dbc.Alert(&quot;Hello Bootstrap!&quot;, color=&quot;success&quot;),
+    className=&quot;p-5&quot;,
+)
+
+if __name__ == &quot;__main__&quot;:
+    app.run_server()
+</code></pre></div><div class="tab-pane fade show" id="r3" role="tabpanel" aria-labelledby="r3-tab"><p>This is a minimal Dash app written in R.</p>
+<pre><code class="language-r">library(dash)
+library(dashBootstrapComponents)
+
+app &lt;- Dash$new(external_stylesheets = dbcThemes$BOOTSTRAP)
+
+app$layout(dbcContainer(dbcAlert(&quot;Hello Bootstrap!&quot;, color = &quot;success&quot;),
+                        className = &quot;p-5&quot;))
+
+app$run_server(showcase = TRUE)
+</code></pre></div><div class="tab-pane fade show" id="julia3" role="tabpanel" aria-labelledby="julia3-tab"><p>This is a minimal Dash app written in Julia.</p>
+<pre><code class="language-julia">using Dash, DashBootstrapComponents
+
+app = dash(external_stylesheets=[dbc_themes.BOOTSTRAP])
+
+app.layout = dbc_container(
+    dbc_alert(&quot;Hello Bootstrap!&quot;, color=&quot;success&quot;),
+    className=&quot;p-5&quot;,
+)
+
+run_server(app, &quot;0.0.0.0&quot;, 8080)
+</code></pre></div></div>
+</div>
+
+<h2>Examples</h2>
+<p>Check out these <a href="/examples">example apps</a> made with <em>dash-bootstrap-components</em>.</p>{% endblock %}

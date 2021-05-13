@@ -1,0 +1,33 @@
+
+{% from "macros/sidenav.html" import sidenav %}
+{% from "macros/navbar.html" import navbar %}
+{% extends "base.html" %}
+{% block title %}<title>Examples - dbc docs</title>{% endblock %}
+{% block header %}{{ navbar("examples") }}{% endblock %}
+{% block body %}
+<div class="container">
+  <main class="dbcd-main mb-5">
+    <h1>4. proje</h1>
+    <p class="lead">
+Dashboards Sample Apps
+    </p>
+    <div class="row">
+      <div class="col-12 col-md-4">
+        <h2>örnek uygulama</h2>
+        <div class="card">
+          <a href="/examples/app-4">
+            <img
+              src="/static/images/examples/app-4.jpg"
+              alt="Iris example screenshot"
+              class="card-img-top card-img-bottom"
+          /></a>
+        </div>
+        <p>
+       örnek uygulama 4
+        </p>
+      </div>
+
+    </div>
+  </main>
+</div>
+{% endblock %}
